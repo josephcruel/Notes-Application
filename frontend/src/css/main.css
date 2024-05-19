@@ -1,0 +1,140 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+
+.notes {
+    display: flex;
+    height: 100%;
+}
+
+.notes * {
+    font-family: sans-serif;
+}
+
+.notes__sidebar {
+    border-left: 2px solid #dddddd; 
+    flex-shrink: 0;
+    overflow-y: auto;
+    padding: 1em;
+    width: 300px;
+    background-color: #000000; 
+    color: #ffffff; 
+}
+
+.notes__add {
+    background: #8cc206;
+    border: none;
+    border-radius: 7px;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 1.25em;
+    font-weight: bold;
+    margin-bottom: 1em;
+    padding: 0.75em 0;
+    width: 100%;
+}
+
+.notes__add:hover {
+    background: #79d043;
+}
+
+.notes__list-item {
+    cursor: pointer;
+}
+
+.notes__list-item--selected {
+    background: #827979;
+    border-radius: 7px;
+    margin-top: 7px;
+    padding: 3px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.notes__list-item--selected:hover {
+    background: #645858;
+}
+
+.notes__box-title,
+.notes__box-updated {
+    padding: 10px;
+}
+
+.notes__box-title {
+    font-size: 1.2em;
+}
+
+.notes__box-body {
+    padding: 0 10px;
+}
+
+.notes__box-updated {
+    color: #aaaaaa;
+    font-style: italic;
+    text-align: right;
+}
+
+.notes__preview {
+    display: flex;
+    flex-direction: column;
+    padding: 2em 3em;
+    flex-grow: 1;
+    position: relative;
+}
+
+.notes__title,
+.notes__body {
+    border: none;
+    outline: none;
+    width: 100%;
+}
+
+.notes__title {
+    font-size: 3em;
+    font-weight: bold;
+}
+
+.notes__body {
+    flex-grow: 1;
+    font-size: 1.2em;
+    line-height: 1.5;
+    margin-top: 2em;
+    resize: none;
+}
+
+.notes__edit {
+    background: #32039f;
+    border: none;
+    border-radius: 7px;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 1.25em;
+    font-weight: bold;
+    margin-top: 1em;
+    margin-left: 0.5em;
+    padding: 0.5em 0;
+    width: 155px;
+}
+
+.notes__delete {
+    background: #cc0909;
+    border: none;
+    border-radius: 7px;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 1.25em;
+    font-weight: bold;
+    margin-top: 1em;
+    margin-left: 0.5em;
+    padding: 0.5em;
+    width: 155px;
+}
+
+.notes__edit:hover {
+    background: #5f47d5;
+}
+.notes__delete:hover {
+    background: #c5642c;
+}
