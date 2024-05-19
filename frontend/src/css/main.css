@@ -138,3 +138,8 @@ body {
 .notes__delete:hover {
     background: #c5642c;
 }
+
+.notes__edit-text {
+    color: #ffffff;
+    text-decoration: none;
+}
