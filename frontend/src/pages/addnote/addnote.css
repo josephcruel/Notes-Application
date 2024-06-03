@@ -1,0 +1,167 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+
+.notes {
+    display: flex;
+    height: 100%;
+}
+
+.notes * {
+    font-family: sans-serif;
+}
+
+.notes__preview {
+    display: flex;
+    flex-direction: column;
+    padding: 2em 3em;
+    flex-grow: 1;
+    position: relative;
+}
+
+.notes__title,
+.notes__body {
+    border: none;
+    outline: none;
+    width: 100%;
+}
+
+.notes__title {
+    font-size: 3em;
+    font-weight: bold;
+}
+
+.notes__body {
+    flex-grow: 1;
+    font-size: 1.2em;
+    line-height: 1.5;
+    margin-top: 2em;
+    resize: none;
+}
+
+.notes__edit {
+    background: #32039f;
+    border: none;
+    border-radius: 7px;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 1.25em;
+    font-weight: bold;
+    margin-top: 1em;
+    margin-left: 0.5em;
+    padding: 0.5em 0;
+    width: 155px;
+}
+
+.notes__delete {
+    background: #cc0909;
+    border: none;
+    border-radius: 7px;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 1.25em;
+    font-weight: bold;
+    margin-top: 1em;
+    margin-left: 0.5em;
+    padding: 0.5em;
+    width: 155px;
+}
+
+.notes__edit:hover {
+    background: #5f47d5;
+}
+
+.notes__delete:hover {
+    background: #c5642c;
+}
+
+.notes__buttons-text {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+
+.notes__modal-container {
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    margin: 20px;
+}
+
+.notes__modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+
+.notes__modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 10px;
+}
+
+.notes__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.notes__modal-exit {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: -10px;
+    margin-right: -10px;
+}
+
+.notes__modal-exit:hover,
+.notes__modal-exit:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.notes__modal-yes,
+.notes__modal-no {
+    background-color: #22db28;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    margin: 10px;
+}
+
+.notes__modal-no {
+    background-color: #ee1405;
+}
+
+.notes__modal-yes:hover,
+.notes__modal-no:hover {
+    opacity: 0.8;
+}
+
+
+@media (max-width: 768px) {
+    .notes__preview {
+        padding: 1em;
+        flex-grow: 1;
+    }
+}

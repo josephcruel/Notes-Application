@@ -5,24 +5,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const closeModalBtn = document.getElementById("closeModalBtn");
     const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
     const cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
-    const toast = document.getElementById('toast');
 
-    // The toast notification 
-    function showToast(message, color) {
-        toast.textContent = message;
-        toast.style.backgroundColor = color;
-        toast.className = 'toast show';
-
-        // Hide after 3 seconds
-        setTimeout(() => {
-            toast.className = 'toast';
-        }, 3000); 
-    }
 
     // When the user click the button, save the note
     saveBtn.onclick = function () {
         console.log('Note Saved');
-        showToast('Save Successful', '#6411da');
+        // Redirct user back to the home page
+        setTimeout(() => {
+            window.location.href = '/frontend/src/pages/home/home.html';
+        }, 200);
     }
 
     // When the user clicks the button, open the modal
@@ -51,15 +42,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
     confirmDeleteBtn.onclick = function () {
         // Add your delete logic here
         console.log('Note deleted');
-        showToast('Delete Successful', '#FF0000');
         modal.style.display = "none";
+
+        // Redirct user back to the home page
+        setTimeout(() => {
+            window.location.href = '/frontend/src/pages/home/home.html';
+        }, 200);
     }
 });
 
-// Sidebar Toggle for responsiveness of the application
-function toggleSidebar() {
-    const sidebar = document.querySelector('.notes__sidebar');
-    sidebar.classList.toggle('visible');
-}
 
 
