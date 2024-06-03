@@ -1,25 +1,24 @@
 document.addEventListener('DOMContentLoaded', (event) => {
-    const saveBtn = document.getElementById("saveBtn")
+    const saveBtn = document.getElementById("saveBtn");
     const modal = document.getElementById("myModal");
     const openModalBtn = document.getElementById("openModalBtn");
     const closeModalBtn = document.getElementById("closeModalBtn");
     const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
     const cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
-    const notesList = document.getElementById('notesList')
-    const notesTitle = document.getElementById('notesTitle')
-    const notesBody = document.getElementById('notesBody')
+    const notesList = document.getElementById('notesList');
+    const notesTitle = document.getElementById('notesTitle');
+    const notesBody = document.getElementById('notesBody');
     const toast = document.getElementById('toast');
 
     function formatDate(dateString) {
-        console.log('Input date:', dateString); // Log the input date
         const date = new Date(dateString);
         return date.toLocaleString(); // Format the date as needed
     }
+
     // Fetch notes from the backend
     fetch('/api/notes')
         .then(response => response.json())
         .then(data => {
-            console.log('Fetched notes:', data); // Log the fetched notes to check the data
             // Clear existing notes
             notesList.innerHTML = '';
             // Populate notes list
@@ -29,7 +28,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 noteItem.innerHTML = `
                     <div class="notes__box-title">${note.title}</div>
                     <div class="notes__box-body">${note.content}</div>
-                    <div class="notes__box-date">${new Date(note.createdAt).toLocaleString()}</div>
+                    <div class="notes__box-date">${formatDate(note.createdAt)}</div>
                 `;
                 noteItem.addEventListener('click', () => {
                     notesTitle.value = note.title;
@@ -39,7 +38,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
             });
         })
         .catch(error => console.error('Error fetching notes:', error));
-
 
     // The toast notification 
     function showToast(message, color) {
@@ -53,7 +51,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }, 3000);
     }
 
-    // When the user click the button, save the note
+    // When the user clicks the button, save the note
     saveBtn.onclick = function () {
         console.log('Note Saved');
         showToast('Save Successful', '#6411da');
@@ -95,5 +93,3 @@ function toggleSidebar() {
     const sidebar = document.querySelector('.notes__sidebar');
     sidebar.classList.toggle('visible');
 }
-
-

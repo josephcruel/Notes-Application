@@ -23,7 +23,6 @@ body {
     color: #ffffff;
     transition: transform 0.3s ease;
     z-index: 1000;
-    background-color: #000000;
 }
 
 .notes__sidebar.hidden {
@@ -69,10 +68,19 @@ body {
     background: #645858;
 }
 
-.notes__box-title,
-.notes__box-date {
+.notes__box-title{
     padding: 10px;
     font-size: 1.2em;
+}
+
+.notes__box-body{
+    font-size: 0.9em;
+}
+
+.notes__box-date {
+    padding: 10px;
+    font-size: 0.7em;
+    color: #009577;
 }
 
 .notes__box-body {
@@ -215,7 +223,6 @@ body {
     background-color: rgba(0, 0, 0, 0.4);
 }
 
-
 .notes__modal-content {
     background-color: #fefefe;
     margin: 15% auto;
@@ -269,7 +276,6 @@ body {
 .notes__modal-no:hover {
     opacity: 0.8;
 }
-
 
 @media (max-width: 768px) {
     .notes__sidebar {
