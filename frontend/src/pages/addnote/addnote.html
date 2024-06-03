@@ -10,11 +10,11 @@
 <body>
     <div class="notes" id="app">
         <div class="notes__preview">
-            <input class="notes__title" type="text" placeholder="Enter a title...">
-            <textarea class="notes__body" placeholder="Enter text here..."></textarea>
+            <input class="notes__title" id="noteTitle" type="text" placeholder="Enter a title...">
+            <textarea class="notes__body" id="noteBody" placeholder="Enter text here..."></textarea>
             <div class="notes__actions">
-                <button class="notes__edit" id="saveBtn" type="button" onclick="saveNote()">Save Note</a></button>
-                <button class="notes__delete" id="openModalBtn" type="button" onclick="deleteNote()">Delete Note</button>
+                <button class="notes__edit" id="saveBtn" type="button">Save Note</a></button>
+                <button class="notes__delete" id="openModalBtn" type="button">Delete Note</button>
             </div>
         </div>
     </div>
@@ -33,6 +33,8 @@
             </div>
         </div>
     </div>
+
+    <div id="toast" class="toast"></div>
 
     <script src="addnote.js"></script>
 </body>

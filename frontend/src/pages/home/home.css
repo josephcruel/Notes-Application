@@ -49,11 +49,15 @@ body {
 }
 
 .notes__list-item {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 10px;
     cursor: pointer;
 }
 
 .notes__list-item--selected {
-    background: #827979;
+    background-color: #827979;
     border-radius: 7px;
     margin-top: 7px;
     padding: 3px;
@@ -66,11 +70,8 @@ body {
 }
 
 .notes__box-title,
-.notes__box-updated {
+.notes__box-date {
     padding: 10px;
-}
-
-.notes__box-title {
     font-size: 1.2em;
 }
 

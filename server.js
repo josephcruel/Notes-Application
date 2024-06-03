@@ -30,7 +30,7 @@ app.use('/home', express.static(path.join(__dirname, 'frontend/src/pages/home'))
 
 // Default route
 app.get('/', (req, res) => {
-    res.redirect('/home');
+    res.redirect('/home/home.html');
 });
 
 

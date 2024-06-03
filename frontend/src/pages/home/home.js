@@ -5,7 +5,41 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const closeModalBtn = document.getElementById("closeModalBtn");
     const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
     const cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
+    const notesList = document.getElementById('notesList')
+    const notesTitle = document.getElementById('notesTitle')
+    const notesBody = document.getElementById('notesBody')
     const toast = document.getElementById('toast');
+
+    function formatDate(dateString) {
+        console.log('Input date:', dateString); // Log the input date
+        const date = new Date(dateString);
+        return date.toLocaleString(); // Format the date as needed
+    }
+    // Fetch notes from the backend
+    fetch('/api/notes')
+        .then(response => response.json())
+        .then(data => {
+            console.log('Fetched notes:', data); // Log the fetched notes to check the data
+            // Clear existing notes
+            notesList.innerHTML = '';
+            // Populate notes list
+            data.forEach(note => {
+                const noteItem = document.createElement('div');
+                noteItem.classList.add('notes__list-item');
+                noteItem.innerHTML = `
+                    <div class="notes__box-title">${note.title}</div>
+                    <div class="notes__box-body">${note.content}</div>
+                    <div class="notes__box-date">${new Date(note.createdAt).toLocaleString()}</div>
+                `;
+                noteItem.addEventListener('click', () => {
+                    notesTitle.value = note.title;
+                    notesBody.value = note.content;
+                });
+                notesList.appendChild(noteItem);
+            });
+        })
+        .catch(error => console.error('Error fetching notes:', error));
+
 
     // The toast notification 
     function showToast(message, color) {
@@ -16,7 +50,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         // Hide after 3 seconds
         setTimeout(() => {
             toast.className = 'toast';
-        }, 3000); 
+        }, 3000);
     }
 
     // When the user click the button, save the note

@@ -19,29 +19,14 @@
             </div>
         </div>
         <div class="notes__sidebar">
-            <button class="notes__add" type="button"><a href="/frontend/src/pages/addnote/addnote.html"class="notes__buttons-text">+ Add Note</a></button>
+            <button class="notes__add" type="button"><a href="/addnote/addnote.html"class="notes__buttons-text">+ Add Note</a></button>
             <input class="notes__search-bar" type="text" placeholder="   Search in Notes...">
-            <div class="notes__list">
-                <div class="notes__list-item notes__list-item--selected">
-                    <div class="notes__box-title">Cooking Reminder</div>
-                    <div class="notes__box-body">Going to cook at my grandmas.</div>
-                    <div class="notes__box-updated">Thursday 3:30pm</div>
-                </div> 
-                <div class="notes__list-item notes__list-item--selected">
-                    <div class="notes__box-title">Math Notes</div>
-                    <div class="notes__box-body">Writing up notes for today's math lesson.</div>
-                    <div class="notes__box-updated">Wednesday 10:50pm</div>
-                </div>
-                <div class="notes__list-item notes__list-item--selected">
-                    <div class="notes__box-title">Tomorrow's Chores</div>
-                    <div class="notes__box-body">Doing Laundry, Vaccum the floors, Clean Dishes...</div>
-                    <div class="notes__box-updated">Monday 9:00am</div>
-                </div>
+            <div class="notes__list" id="notesList">
             </div>
         </div>
     </div>
 
-    <div id="toast" class="toast">Save Successful</div>
+    <div id="toast" class="toast"></div>
 
     <div class="notes__modal-container">
         <div id="myModal" class="notes__modal">

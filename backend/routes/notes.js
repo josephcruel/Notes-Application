@@ -21,14 +21,15 @@ router.get('/:id', getNote, (req, res) => {
 
 // Create a new note
 router.post('/', async (req, res) => {
-    const note = new Note({
+    const newNote = new Note({
         title: req.body.title,
         content: req.body.content,
+        updatedAt: new Date().toISOString()
     });
 
     try {
-        const newNote = await note.save();
-        res.status(201).json(newNote);
+        const savedNote = await newNote.save();
+        res.status(201).json(savedNote);
     } catch (err) {
         res.status(400).json({ message: err.message });
     }
@@ -42,6 +43,7 @@ router.put('/:id', getNote, async (req, res) => {
     if (req.body.content != null) {
         res.note.content = req.body.content;
     }
+    res.note.updatedAt = new Date().toISOString();
 
     try {
         const updatedNote = await res.note.save();
