@@ -1,41 +1,30 @@
 document.addEventListener('DOMContentLoaded', (event) => {
+    const saveBtn = document.getElementById("saveBtn")
     const modal = document.getElementById("myModal");
     const openModalBtn = document.getElementById("openModalBtn");
     const closeModalBtn = document.getElementById("closeModalBtn");
     const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
     const cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
+    const toast = document.getElementById('toast');
 
-
-    // Sidebar Toggle for responsiveness of the application
-    function toggleSidebar() {
-        const sidebar = document.querySelector('.notes__sidebar');
-        sidebar.classList.toggle('visible');
-    }
-
-    // Toast Notifications for buttons
+    // The toast notification 
     function showToast(message, color) {
-        const toast = document.getElementById('toast');
         toast.textContent = message;
         toast.style.backgroundColor = color;
         toast.className = 'toast show';
 
+        // Hide after 3 seconds
         setTimeout(() => {
             toast.className = 'toast';
-        }, 3000); // Hide after 3 seconds
+        }, 3000); 
     }
 
-    // Save toast notification
-    function saveNote() {
-        // Show toast notification
-        showToast('Save Successful', '#007BFF');
+    // When the user click the button, save the note
+    saveBtn.onclick = function () {
+        console.log('Note Saved');
+        showToast('Save Successful', '#6411da');
     }
 
-    // Delete toast notification
-    function deleteNote() {
-        // Show toast notification
-        showToast('Delete Successful', '#FF0000');
-    }
-    
     // When the user clicks the button, open the modal
     openModalBtn.onclick = function () {
         modal.style.display = "block";
@@ -62,9 +51,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
     confirmDeleteBtn.onclick = function () {
         // Add your delete logic here
         console.log('Note deleted');
+        showToast('Delete Successful', '#FF0000');
         modal.style.display = "none";
     }
 });
 
+// Sidebar Toggle for responsiveness of the application
+function toggleSidebar() {
+    const sidebar = document.querySelector('.notes__sidebar');
+    sidebar.classList.toggle('visible');
+}
 
 

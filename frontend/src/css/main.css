@@ -257,8 +257,6 @@ body {
     cursor: pointer;
     border-radius: 5px;
     font-size: 16px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
     margin: 10px;
 }
 
@@ -269,7 +267,6 @@ body {
 .notes__modal-yes:hover,
 .notes__modal-no:hover {
     opacity: 0.8;
-
 }
 
 
