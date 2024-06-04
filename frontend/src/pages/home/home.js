@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const notesBody = document.getElementById('notesBody');
     const toast = document.getElementById('toast');
 
+    let selectedNoteId = null;  // Variable to keep track of the selected note
+
     function formatDate(dateString) {
         const date = new Date(dateString);
         return date.toLocaleString(); // Format the date as needed
@@ -25,6 +27,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             data.forEach(note => {
                 const noteItem = document.createElement('div');
                 noteItem.classList.add('notes__list-item');
+                noteItem.dataset.noteId = note._id;  // Set data-note-id attribute
                 noteItem.innerHTML = `
                     <div class="notes__box-title">${note.title}</div>
                     <div class="notes__box-body">${note.content}</div>
@@ -33,6 +36,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 noteItem.addEventListener('click', () => {
                     notesTitle.value = note.title;
                     notesBody.value = note.content;
+                    selectedNoteId = note._id;  // Set the selected note ID
+                    console.log('Selected note ID:', selectedNoteId);  // Log the selected note ID
                 });
                 notesList.appendChild(noteItem);
             });
@@ -53,8 +58,38 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     // When the user clicks the button, save the note
     saveBtn.onclick = function () {
-        console.log('Note Saved');
-        showToast('Save Successful', '#6411da');
+        console.log('Attempting to save note with ID:', selectedNoteId);  // Log the selected note ID
+        if (selectedNoteId) {
+            const updatedNote = {
+                title: notesTitle.value,
+                content: notesBody.value
+            };
+
+            fetch(`/api/notes/${selectedNoteId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(updatedNote)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Note updated:', data);
+                    showToast('Save Successful', '#6411da');
+                    // Update the note in the list without re-fetching all notes
+                    const noteItems = notesList.getElementsByClassName('notes__list-item');
+                    for (let item of noteItems) {
+                        if (item.dataset.noteId === selectedNoteId) {
+                            item.querySelector('.notes__box-title').textContent = updatedNote.title;
+                            item.querySelector('.notes__box-body').textContent = updatedNote.content;
+                            break;
+                        }
+                    }
+                })
+                .catch(error => console.error('Error updating note:', error));
+        } else {
+            showToast('No note selected', '#FF0000');
+        }
     }
 
     // When the user clicks the button, open the modal
@@ -81,7 +116,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     // When the user clicks on the Yes button, perform delete action and close the modal
     confirmDeleteBtn.onclick = function () {
-        // Add your delete logic here
         console.log('Note deleted');
         showToast('Delete Successful', '#FF0000');
         modal.style.display = "none";
