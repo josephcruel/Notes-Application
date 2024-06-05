@@ -54,14 +54,18 @@ router.put('/:id', getNote, async (req, res) => {
 });
 
 // Delete a note
-router.delete('/:id', getNote, async (req, res) => {
+router.delete('/:id', async (req, res) => {
     try {
-        await res.note.remove();
+        const note = await Note.findOneAndDelete({ _id: req.params.id });
+        if (!note) {
+            return res.status(404).json({ message: 'Note not found' });
+        }
         res.json({ message: 'Deleted Note' });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
 });
+
 
 // Middleware to get a note by ID
 async function getNote (req, res, next) {
@@ -73,7 +77,7 @@ async function getNote (req, res, next) {
         }
     } catch (err) {
         return res.status(500).json({ message: err.message });
-    }
+    } 
 
     res.note = note;
     next();

@@ -116,10 +116,41 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     // When the user clicks on the Yes button, perform delete action and close the modal
     confirmDeleteBtn.onclick = function () {
-        console.log('Note deleted');
-        showToast('Delete Successful', '#FF0000');
-        modal.style.display = "none";
-    }
+        console.log('Attempting to delete note with ID:', selectedNoteId);  // Log the selected note ID
+    
+        if (selectedNoteId) {
+            fetch(`/api/notes/${selectedNoteId}`, {
+                method: 'DELETE'
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Note deleted successfully');
+                    showToast('Delete Successful', '#FF0000');
+                    modal.style.display = "none";
+                    notesTitle.value = '';
+                    notesBody.value = '';
+                    
+                    // Remove the note from the list without re-fetching all notes
+                    const noteItemToRemove = notesList.querySelector(`[data-note-id="${selectedNoteId}"]`);
+                    if (noteItemToRemove) {
+                        notesList.removeChild(noteItemToRemove);
+                        selectedNoteId = null;  // Clear the selectedNoteId after removing the note
+                    } else {
+                        console.error('Could not find note in the list to remove');
+                    }
+                } else {
+                    console.error('Failed to delete note:', response.status);
+                    showToast('Failed to delete note', '#FF0000');
+                }
+            })
+            .catch(error => {
+                console.error('Error deleting note:', error);
+                showToast('Error deleting note', '#FF0000');
+            });
+        } else {
+            showToast('No note selected', '#FF0000');
+        }
+    };    
 });
 
 // Sidebar Toggle for responsiveness of the application
