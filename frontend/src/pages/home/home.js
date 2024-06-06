@@ -8,9 +8,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const notesList = document.getElementById('notesList');
     const notesTitle = document.getElementById('notesTitle');
     const notesBody = document.getElementById('notesBody');
+    const notesSearchBar = document.getElementById('notesSearchBar'); 
     const toast = document.getElementById('toast');
 
     let selectedNoteId = null;  // Variable to keep track of the selected note
+    let notes = [];  // Array to store the notes
 
     function formatDate(dateString) {
         const date = new Date(dateString);
@@ -21,28 +23,43 @@ document.addEventListener('DOMContentLoaded', (event) => {
     fetch('/api/notes')
         .then(response => response.json())
         .then(data => {
-            // Clear existing notes
-            notesList.innerHTML = '';
-            // Populate notes list
-            data.forEach(note => {
-                const noteItem = document.createElement('div');
-                noteItem.classList.add('notes__list-item');
-                noteItem.dataset.noteId = note._id;  // Set data-note-id attribute
-                noteItem.innerHTML = `
-                    <div class="notes__box-title">${note.title}</div>
-                    <div class="notes__box-body">${note.content}</div>
-                    <div class="notes__box-date">${formatDate(note.createdAt)}</div>
-                `;
-                noteItem.addEventListener('click', () => {
-                    notesTitle.value = note.title;
-                    notesBody.value = note.content;
-                    selectedNoteId = note._id;  // Set the selected note ID
-                    console.log('Selected note ID:', selectedNoteId);  // Log the selected note ID
-                });
-                notesList.appendChild(noteItem);
-            });
+            notes = data;  // Store fetched notes
+            displayNotes(notes);  // Display notes
         })
         .catch(error => console.error('Error fetching notes:', error));
+
+    function displayNotes(notesToDisplay) {
+        // Clear existing notes
+        notesList.innerHTML = '';
+        // Populate notes list
+        notesToDisplay.forEach(note => {
+            const noteItem = document.createElement('div');
+            noteItem.classList.add('notes__list-item');
+            noteItem.dataset.noteId = note._id;  // Set data-note-id 
+            noteItem.innerHTML = `
+                <div class="notes__box-title">${note.title}</div>
+                <div class="notes__box-body">${note.content}</div>
+                <div class="notes__box-date">${formatDate(note.createdAt)}</div>
+            `;
+            noteItem.addEventListener('click', () => {
+                notesTitle.value = note.title;
+                notesBody.value = note.content;
+                selectedNoteId = note._id;  // Set the selected note ID
+                console.log('Selected note ID:', selectedNoteId);  // Log the selected note ID
+            });
+            notesList.appendChild(noteItem);
+        });
+    }
+
+    // Filter notes by title
+    function filterNotes() {
+        const searchTerm = notesSearchBar.value.toLowerCase();
+        const filteredNotes = notes.filter(note => note.title.toLowerCase().includes(searchTerm));
+        displayNotes(filteredNotes);
+    }
+
+    // Add event listener to the search bar
+    notesSearchBar.addEventListener('input', filterNotes);
 
     // The toast notification 
     function showToast(message, color) {
