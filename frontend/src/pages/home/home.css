@@ -1,7 +1,9 @@
 html,
 body {
-    height: 100%;
+    height: 100vh;
     margin: 0;
+    padding: 0;
+    overflow: hidden;
 }
 
 .notes {
@@ -277,7 +279,7 @@ body {
     opacity: 0.8;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1260px) {
     .notes__sidebar {
         position: fixed;
         top: 0;
