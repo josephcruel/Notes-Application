@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 selectedNoteId = note._id;  // Set the selected note ID
                 console.log('Selected note ID:', selectedNoteId);  // Log the selected note ID
             });
-            notesList.appendChild(noteItem);
+            notesList.prepend(noteItem);
         });
     }
 
