@@ -73,10 +73,16 @@ body {
 .notes__box-title{
     padding: 10px;
     font-size: 1.2em;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .notes__box-body{
     font-size: 0.9em;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .notes__box-date {
