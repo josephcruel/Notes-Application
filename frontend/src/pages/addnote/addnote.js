@@ -18,11 +18,24 @@ document.addEventListener('DOMContentLoaded', (event) => {
         // Hide after 3 seconds
         setTimeout(() => {
             toast.className = 'toast';
-        }, 3000); 
+        }, 3000);
+    }
+
+    // Function to validate the form
+    function validateForm() {
+        if (noteTitle.value.trim() === '' || noteBody.value.trim() === '') {
+            showToast('Title or Body require text', '#FF0000');
+            return false; // Prevent form submission
+        }
+        return true; // Allow form submission
     }
 
     // When the user click the button, save the note
     saveBtn.onclick = function () {
+        // Validate the form before proceeding
+        if (!validateForm()) {
+            return; // Exit function if form is invalid
+        }
         const note = {
             title: noteTitle.value,
             content: noteBody.value,
@@ -36,19 +49,19 @@ document.addEventListener('DOMContentLoaded', (event) => {
             },
             body: JSON.stringify(note),
         })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Note saved:', data);
-            showToast('Note Saved', '#6411da');
-            // Redirect user back to the home page
-            setTimeout(() => {
-                window.location.href = '/home/home.html';
-            }, 2000);
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-            showToast('Failed to Save Note', '#FF0000');
-        });
+            .then(response => response.json())
+            .then(data => {
+                console.log('Note saved:', data);
+                showToast('Note Saved', '#6411da');
+                // Redirect user back to the home page
+                setTimeout(() => {
+                    window.location.href = '/home/home.html';
+                }, 2000);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                showToast('Failed to Save Note', '#FF0000');
+            });
     }
 
     // When the user clicks the button, open the modal

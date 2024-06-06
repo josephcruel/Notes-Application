@@ -10,8 +10,8 @@
 <body>
     <div class="notes" id="app">
         <div class="notes__preview">
-            <input class="notes__title" id="noteTitle" type="text" placeholder="Enter a title...">
-            <textarea class="notes__body" id="noteBody" placeholder="Enter text here..."></textarea>
+            <input class="notes__title" id="noteTitle" type="text" placeholder="Enter a title..." maxlength="50" required>
+            <textarea class="notes__body" id="noteBody" placeholder="Enter text here..." maxlength="500" required></textarea>
             <div class="notes__actions">
                 <button class="notes__edit" id="saveBtn" type="button">Save Note</a></button>
                 <button class="notes__delete" id="openModalBtn" type="button">Delete Note</button>
