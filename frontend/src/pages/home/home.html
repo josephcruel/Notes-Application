@@ -10,6 +10,8 @@
 </head>
 
 <body>
+
+    <!---- Main Area ---->
     <div class="notes" id="app">
         <button class="notes__toggle-sidebar" type="button" onclick="toggleSidebar()">☰</button>
         <div class="notes__preview">
@@ -22,6 +24,8 @@
                     Note</button>
             </div>
         </div>
+
+        <!---- Sidebar containing cards of notes---->
         <div class="notes__sidebar">
             <button class="notes__add" type="button"><a href="/addnote/addnote.html" class="notes__buttons-text">+ Add
                     Note</a></button>
@@ -31,8 +35,10 @@
         </div>
     </div>
 
+    <!--- Toast Notifications ---->
     <div id="toast" class="toast"></div>
 
+    <!---- Delete Modal ---->
     <div class="notes__modal-container">
         <div id="myModal" class="notes__modal">
             <div class="notes__modal-content">
@@ -48,6 +54,7 @@
         </div>
     </div>
 
+    <!---- Javascript ---->
     <script src="home.js"></script>
 </body>
 

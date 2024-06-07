@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const noteBody = document.getElementById('noteBody')
     const toast = document.getElementById('toast');
 
-    // The toast notification 
+    // Toast notification function
     function showToast(message, color) {
         toast.textContent = message;
         toast.style.backgroundColor = color;
@@ -23,7 +23,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     // Function to validate the form
     function validateForm() {
+        // To see if the title or body are empty
         if (noteTitle.value.trim() === '' || noteBody.value.trim() === '') {
+            // Shows toast notification
             showToast('Title or Body require text', '#FF0000');
             return false; // Prevent form submission
         }
@@ -36,12 +38,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
         if (!validateForm()) {
             return; // Exit function if form is invalid
         }
+        // Create a note with title, content, and date
         const note = {
             title: noteTitle.value,
             content: noteBody.value,
             updatedAt: new Date()
         };
 
+        // Post request to save the note
         fetch('/api/notes', {
             method: 'POST',
             headers: {
@@ -51,7 +55,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
         })
             .then(response => response.json())
             .then(data => {
+                // Logs the save function
                 console.log('Note saved:', data);
+                // Shows toast notification
                 showToast('Note Saved', '#6411da');
                 // Redirect user back to the home page
                 setTimeout(() => {
@@ -88,7 +94,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     // When the user clicks on the Yes button, perform delete action and close the modal
     confirmDeleteBtn.onclick = function () {
+        // Logs the delete function
         console.log('Note deleted');
+        // Shows toast notification
         showToast('Note Discarded', '#FF0000');
         modal.style.display = "none";
 

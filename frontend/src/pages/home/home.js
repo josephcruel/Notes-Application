@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     let selectedNoteId = null;  // Variable to keep track of the selected note
     let notes = [];  // Array to store the notes
 
+    // Function to format date
     function formatDate(dateString) {
         const date = new Date(dateString);
         return date.toLocaleString(); // Format the date as needed
@@ -28,6 +29,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         })
         .catch(error => console.error('Error fetching notes:', error));
 
+    // Function to display the notes
     function displayNotes(notesToDisplay) {
         // Clear existing notes
         notesList.innerHTML = '';
@@ -41,17 +43,19 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 <div class="notes__box-body">${note.content}</div>
                 <div class="notes__box-date">${formatDate(note.createdAt)}</div>
             `;
+            // Add an click event listener to each card
             noteItem.addEventListener('click', () => {
                 notesTitle.value = note.title;
                 notesBody.value = note.content;
                 selectedNoteId = note._id;  // Set the selected note ID
                 console.log('Selected note ID:', selectedNoteId);  // Log the selected note ID
             });
+            // Add the new note to the top of the sidebar
             notesList.prepend(noteItem);
         });
     }
 
-    // Filter notes by title
+    // Function to filter notes by title
     function filterNotes() {
         const searchTerm = notesSearchBar.value.toLowerCase();
         const filteredNotes = notes.filter(note => note.title.toLowerCase().includes(searchTerm));
@@ -82,6 +86,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 content: notesBody.value
             };
 
+            // Put request to update a note 
             fetch(`/api/notes/${selectedNoteId}`, {
                 method: 'PUT',
                 headers: {
@@ -91,7 +96,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
             })
                 .then(response => response.json())
                 .then(data => {
+                    // Logs the update function
                     console.log('Note updated:', data);
+                    // Show toast notification
                     showToast('Save Successful', '#6411da');
                     // Update the note in the list without re-fetching all notes
                     const noteItems = notesList.getElementsByClassName('notes__list-item');
@@ -105,7 +112,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     // Refresh the home page 
                     setTimeout(() => {
                         window.location.href = '/home/home.html';
-                    }, 100);
+                    }, 500);
                 })
                 .catch(error => console.error('Error updating note:', error));
         } else {
@@ -140,12 +147,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
         console.log('Attempting to delete note with ID:', selectedNoteId);  // Log the selected note ID
 
         if (selectedNoteId) {
+            // Delete request tp delete the note
             fetch(`/api/notes/${selectedNoteId}`, {
                 method: 'DELETE'
             })
                 .then(response => {
                     if (response.ok) {
+                        // Logs the delete function
                         console.log('Note deleted successfully');
+                        // Show toast notification
                         showToast('Delete Successful', '#FF0000');
                         modal.style.display = "none";
                         notesTitle.value = '';

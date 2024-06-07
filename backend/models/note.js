@@ -1,5 +1,7 @@
+// Import Mongoose
 const mongoose = require('mongoose');
 
+// Defining the Schema for notes
 const NoteSchema = new mongoose.Schema({
     title: {
         type: String,
@@ -15,4 +17,5 @@ const NoteSchema = new mongoose.Schema({
     },
 });
 
+// Export the Note model based on the NoteSchema
 module.exports = mongoose.model('Note', NoteSchema);
