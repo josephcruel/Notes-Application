@@ -5,6 +5,9 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path')
 
+// Load environment variables
+require('dotenv').config();
+
 // Initialize Express
 const app = express();
 
@@ -15,8 +18,11 @@ app.use(bodyParser.json());
 app.use(cors());
 
 // Setting the MongoDB Connection
-const mongoURI = 'mongodb+srv://josephcruel:RPsgRovde6Y43cAR@notescluster.pdmqjze.mongodb.net/';
-mongoose.connect(mongoURI);
+const mongoURI = process.env.MONGO_URI || 'mongodb+srv://josephcruel:RPsgRovde6Y43cAR@notescluster.pdmqjze.mongodb.net/';
+mongoose.connect(mongoURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+});
 
 const db = mongoose.connection;
 // Loggging mongodb connection errors
@@ -31,6 +37,14 @@ db.once('open', () => {
 // Import and use the notes route handler
 const notes = require('./backend/routes/notes');
 app.use('/api/notes', notes);
+
+// Import and use the user and auth route handlers
+const userRoutes = require('./backend/routes/user');
+const authRoutes = require('./backend/routes/auth');
+app.use('/api/users', userRoutes);
+app.use('/api/auth', authRoutes);
+
+
 
 // Serve static files for adding a note
 app.use('/addnote', express.static(path.join(__dirname, 'frontend/src/pages/addnote')));
