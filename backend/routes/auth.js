@@ -3,11 +3,12 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
 const User = require('../models/User')
+require('dotenv').config()
 
 const router = express.Router()
 
 router.post('/signup', async (req, res) => {
-    const {name, email, passowrd} = req.body
+    const {name, email, password} = req.body
 
     try {
         let user = await User.findOne({email})
@@ -30,6 +31,7 @@ router.post('/signup', async (req, res) => {
             res.json({token})
         })
     } catch(err) {
+        console.error(err.message);
         res.status(500).send('Server Error')
     }
 })
@@ -52,12 +54,13 @@ router.post('/login', async (req, res) => {
 
         const payload = { user: { id: user.id}}
 
-        jwt.sign(payload, process.env.JWT_SECRET, {expiresIn: 360000}, (err, token) => {
+        jwt.sign(payload, process. env.JWT_SECRET, {expiresIn: 360000}, (err, token) => {
             if(err) throw err
             res.json({token})
         })
 
     } catch(err) {
+        console.error(err.message)
         res.status(500).send('Server error')
     }
 })
