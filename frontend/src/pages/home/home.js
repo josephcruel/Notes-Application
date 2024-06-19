@@ -9,6 +9,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const notesTitle = document.getElementById('notesTitle');
     const notesBody = document.getElementById('notesBody');
     const notesSearchBar = document.getElementById('notesSearchBar');
+    const signUpLink = document.getElementById('signUpLink');
+    const loginLink = document.getElementById('loginLink');
+
     const toast = document.getElementById('toast');
 
     let selectedNoteId = null;  // Variable to keep track of the selected note
@@ -142,6 +145,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
     }
 
+    signUpLink.addEventListener('click', () => {
+        window.location.href = '/signup/signup.html'; // Navigate to signup page
+    });
+
+    loginLink.addEventListener('click', () => {
+        window.location.href = '/login/login.html'; // Navigate to login page
+    });
+
     // When the user clicks on the Yes button, perform delete action and close the modal
     confirmDeleteBtn.onclick = function () {
         console.log('Attempting to delete note with ID:', selectedNoteId);  // Log the selected note ID
@@ -189,3 +200,6 @@ function toggleSidebar() {
     const sidebar = document.querySelector('.notes__sidebar');
     sidebar.classList.toggle('visible');
 }
+
+
+

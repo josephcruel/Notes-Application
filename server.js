@@ -45,11 +45,14 @@ app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
 
 
-
 // Serve static files for adding a note
 app.use('/addnote', express.static(path.join(__dirname, 'frontend/src/pages/addnote')));
 // Server static files for the home page
 app.use('/home', express.static(path.join(__dirname, 'frontend/src/pages/home')));
+// Server static files for the signup page
+app.use('/signup', express.static(path.join(__dirname, 'frontend/src/pages/signup')));
+// Server static files for the login page
+app.use('/login', express.static(path.join(__dirname, 'frontend/src/pages/login')));
 
 // Default route
 app.get('/', (req, res) => {

@@ -10,14 +10,17 @@
     <!---- Login ---->
     <div class="login-container">
         <h2>Login</h2>
-        <form action="/api/auth/login" method="post">
+        <form id="loginForm" action="/api/auth/login" method="post">
             <label for="email">Email:</label> 
             <input type="email" id="email" name="email" required>
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
-            <p>Dont have an account. <a href="/frontend/src/pages/signup/signup.html">Sign Up!</a></p>
+            <p>Dont have an account. <a href="/signup/signup.html">Sign Up!</a></p>
             <input type="submit" value="Login">
         </form>
     </div>
+
+    <!---- Javascript ---->
+    <script src="login.js"></script>
 </body>
 </html>
