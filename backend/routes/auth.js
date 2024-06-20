@@ -1,68 +1,75 @@
-const express = require('express')
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
+const express = require('express');
+const bcryptjs = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const User = require('../models/User');
+require('dotenv').config();
 
-const User = require('../models/User')
-require('dotenv').config()
+const router = express.Router();
 
-const router = express.Router()
-
+// Signup
 router.post('/signup', async (req, res) => {
-    const {name, email, password} = req.body
+    const { name, email, password } = req.body;
 
     try {
-        let user = await User.findOne({email})
+        // Check if user already exists
+        let user = await User.findOne({ email });
 
-        if(user) {
-            return res.status(400).json({ msg: 'User already exists'})
+        if (user) {
+            return res.status(400).json({ msg: 'User already exists' });
         }
 
-        user = new User({name, email, password})
+        // Create new user
+        user = new User({ name, email, password });
 
-        const salt = await bcrypt.genSalt(10)
-        user.password = await bcrypt.hash(password, salt)
+        // Hash password
+        const salt = await bcrypt.genSalt(10);
+        user.password = await bcrypt.hash(password, salt);
 
-        await user.save()
+        // Save user to database
+        await user.save();
 
-        const payload = {user: { id: user.id}}
-
-        jwt.sign(payload, process.env.JWT_SECRET, {expiresIn: 360000}, (err, token) => {
-            if(err) throw err
-            res.json({token})
-        })
-    } catch(err) {
+        // Generate JWT token
+        const payload = { user: { id: user.id } };
+        jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '360000' }, (err, token) => {
+            if (err) throw err;
+            res.json({ token });
+        });
+    } catch (err) {
         console.error(err.message);
-        res.status(500).send('Server Error')
+        res.status(500).send('Server Error');
     }
-})
+});
 
+// Login
 router.post('/login', async (req, res) => {
-    const {email, password} = req.body 
+    const { email, password } = req.body;
 
     try {
-        let user = await User.findOne({email})
-         
-        if(!user){
-            return res.status(400).json({ msg: 'Invalid Credentials'})
+        // Check if user exists
+        let user = await User.findOne({ email });
+
+        if (!user) {
+            return res.status(400).json({ msg: 'Invalid Credentials' });
         }
 
-        const isMatch = await bcrypt.compare(password, user.password)
+        // Verify password
+        const isMatch = await bcrypt.compare(password, user.password);
 
-        if (!isMatch){
-            return res.status(400).json({ msg: 'Invalid Credentials'})
+        if (!isMatch) {
+            return res.status(400).json({ msg: 'Invalid Credentials' });
         }
 
-        const payload = { user: { id: user.id}}
+        // Generate JWT token
+        const payload = { user: { id: user.id } };
+        jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '360000' }, (err, token) => {
+            if (err) throw err;
+            res.json({ token });
+        });
 
-        jwt.sign(payload, process. env.JWT_SECRET, {expiresIn: 360000}, (err, token) => {
-            if(err) throw err
-            res.json({token})
-        })
-
-    } catch(err) {
-        console.error(err.message)
-        res.status(500).send('Server error')
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server error');
     }
-})
+});
 
-module.exports = router
+module.exports = router;

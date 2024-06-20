@@ -1,53 +1,58 @@
 document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.getElementById('loginForm');
-    const toast = document.getElementById('toast');
+    const toast = document.getElementById('toast'); 
 
-    // Toast notification function
+    // Function to display toast notifications
     function showToast(message, color) {
-        toast.textContent = message;
-        toast.style.backgroundColor = color;
-        toast.className = 'toast show';
-
-        // Hide after 3 seconds
+        toast.textContent = message; 
+        toast.style.backgroundColor = color; 
+        toast.classList.add('show'); 
+        // Hide the toast after 3 seconds
         setTimeout(() => {
-            toast.className = 'toast';
+            toast.classList.remove('show');
         }, 3000);
     }
 
-    loginForm.addEventListener('submit', (event) => {
-        event.preventDefault();
+    // Event listener for the login form submission
+    loginForm.addEventListener('submit', async function(event) {
+        event.preventDefault(); // Prevents the default form submission behavior
 
-        const email = loginForm.elements.email.value;
-        const password = loginForm.elements.password.value;
+        // Get user inputs from the form
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
 
-        logIn(email, password);
-    });
+        const loginData = { email, password }; // Stores email and password in an object
+        console.log('Sending login data:', loginData); 
 
-    function logIn(email, password) {
-        fetch('/api/auth/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email, password }),
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Login failed');
-                showToast('Signup Failed', '#FF0000');
+        try {
+            // Send a POST request to the server-side API for user login
+            const response = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json', 
+                },
+                body: JSON.stringify(loginData) // Converts loginData object to JSON string
+            });
+
+            const result = await response.json(); // Parses the JSON response from the server
+
+            if (response.ok) {
+                console.log('Login successful:', result); 
+                showToast('Login Successful', '#6411da'); 
+
+                // Save the JWT token received in localStorage for future API requests
+                localStorage.setItem('token', result.token);
+
+                // Redirect to the home page after successful login
+                setTimeout(() => {
+                    window.location.href = '/home'; // Redirects to the '/home' 
+                }, 1000);
+            } else {
+                throw new Error('Login failed'); // Throws an error if login was unsuccessful
             }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Login successful:', data);
-            showToast('Signup Sucessful', '#6411da');
-            setTimeout(() => {
-                window.location.href = '/home/home.html';
-            }, 1000);
-        })
-        .catch(error => {
-            console.error('Error logging in:', error);
-            showToast('Signup Failed', '#FF0000');
-        });
-    }
+        } catch (error) {
+            console.error('Error logging in:', error); 
+            showToast('Login Failed', '#FF0000'); 
+        }
+    });
 });

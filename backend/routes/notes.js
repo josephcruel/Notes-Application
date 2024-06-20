@@ -1,12 +1,13 @@
 // Import Express
 const express = require('express');
 const router = express.Router();
+const auth = require('../middleware/auth');
 
 // Note model
 const Note = require('../models/note');
 
 // Get all the notes
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
     try {
         // Fetch notes from the database
         const notes = await Note.find();
@@ -18,13 +19,13 @@ router.get('/', async (req, res) => {
 });
 
 // Get a single note by ID
-router.get('/:id', getNote, (req, res) => {
+router.get('/:id', auth, getNote, (req, res) => {
     // Respond with the note fetched by the middleware
     res.json(res.note);
 });
 
 // Create a new note
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
     // Create a new instance of a new note
     const newNote = new Note({
         title: req.body.title,
@@ -42,7 +43,7 @@ router.post('/', async (req, res) => {
 });
 
 // Update a note
-router.put('/:id', getNote, async (req, res) => {
+router.put('/:id', auth, getNote, async (req, res) => {
     // Update the title if it is present in the request body
     if (req.body.title != null) {
         res.note.title = req.body.title;
@@ -65,7 +66,7 @@ router.put('/:id', getNote, async (req, res) => {
 });
 
 // Delete a note
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', auth, async (req, res) => {
     try {
         // Find the note with a certain ID and delete
         const note = await Note.findOneAndDelete({ _id: req.params.id });
